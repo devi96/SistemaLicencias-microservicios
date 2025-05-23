@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 public record UserRegister(
@@ -19,5 +20,5 @@ public record UserRegister(
      String telefono,
      String direccion,
      LocalDate fecha_registros,
-     Set<RolEntity> roles
+     List<Long> rolId
 ){}

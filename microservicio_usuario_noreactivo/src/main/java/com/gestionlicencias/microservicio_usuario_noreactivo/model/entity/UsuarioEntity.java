@@ -1,4 +1,5 @@
 package com.gestionlicencias.microservicio_usuario_noreactivo.model.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

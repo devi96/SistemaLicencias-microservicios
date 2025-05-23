@@ -2,9 +2,9 @@ package com.gestionlicencias.microservicio_usuario_noreactivo.controller;
 import java.util.List;
 import java.util.Optional;
 
-import com.gestionlicencias.microservicio_usuario_noreactivo.model.entity.dto.LoginRequest;
+import com.gestionlicencias.microservicio_usuario_noreactivo.model.entity.dto.UsuarioRequest;
+import com.gestionlicencias.microservicio_usuario_noreactivo.model.entity.dto.UsuarioResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,14 +28,14 @@ public class UsuarioController {
     }*/
 
     @GetMapping
-    public ResponseEntity<List<UsuarioEntity>> listarUsuarios() {
-        List<UsuarioEntity> usuarioEntities = usuarioService.listarUsuarios(); // Método que devuelve una lista de usuarios
-        return ResponseEntity.ok(usuarioEntities);
+    public ResponseEntity<List<UsuarioResponse>> listarUsuarios() {
+        List<UsuarioResponse> usuarios = usuarioService.listarUsuarios(); // Método que devuelve una lista de usuarios
+        return ResponseEntity.ok(usuarios);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioEntity> buscarPorId(@PathVariable Long id) {
-        Optional<UsuarioEntity> usuario = usuarioService.buscarPorId(id); // Método que busca un usuario por ID
+    public ResponseEntity<UsuarioResponse> buscarPorId(@PathVariable Long id) {
+        Optional<UsuarioResponse> usuario = usuarioService.buscarPorId(id); // Método que busca un usuario por ID
         if (usuario.isPresent()) {
             return ResponseEntity.ok(usuario.get());
         } else {
@@ -44,10 +44,10 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioEntity> actualizarUsuario(@PathVariable Long id, @RequestBody UsuarioEntity usuarioEntity) {
-        UsuarioEntity usuarioEntityActualizado = usuarioService.actualizarUsuario(id, usuarioEntity); // Método que edita un usuario
-        if (usuarioEntityActualizado != null) {
-            return ResponseEntity.ok(usuarioEntityActualizado);
+    public ResponseEntity<UsuarioResponse> actualizarUsuario(@PathVariable Long id, @RequestBody UsuarioRequest request) {
+        UsuarioResponse usuario = usuarioService.actualizarUsuario(id, request); // Método que edita un usuario
+        if (usuario != null) {
+            return ResponseEntity.ok(usuario);
         } else {
             return ResponseEntity.notFound().build();
         }

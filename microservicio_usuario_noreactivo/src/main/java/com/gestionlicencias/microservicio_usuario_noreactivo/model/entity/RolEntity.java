@@ -3,6 +3,7 @@ package com.gestionlicencias.microservicio_usuario_noreactivo.model.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,8 +23,8 @@ public class RolEntity {
     private Long id;
     
     private String descripcion;
-
-    @ManyToMany(mappedBy = "roles")
-    private Set<UsuarioEntity> usuarioEntities;
+    //@JsonIgnore
+    //@ManyToMany(mappedBy = "roles")
+    //private Set<UsuarioEntity> usuarioEntities;
 
 }

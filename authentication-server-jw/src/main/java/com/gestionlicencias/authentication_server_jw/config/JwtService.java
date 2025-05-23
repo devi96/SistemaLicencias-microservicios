@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class JwtService {
@@ -19,10 +22,16 @@ public class JwtService {
 
     public String generateToken(UserDetails userDetails) {
         UserEntity user = (UserEntity) userDetails;
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("email", user.getEmail());
+        claims.put("roles", user.getRoles().stream()
+                .map(e -> e.getDescripcion())
+                .collect(Collectors.toList()));
         // Implement JWT token generation logic here
         return Jwts.builder()
                 .setSubject(user.getEmail())
                 .setIssuedAt(new Date())
+                .setClaims(claims)
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // Token valid for 10 hours
                 .signWith(getKey())
                 .compact();
