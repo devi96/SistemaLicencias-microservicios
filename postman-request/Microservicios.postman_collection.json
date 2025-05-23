@@ -1,0 +1,59 @@
+{
+	"info": {
+		"_postman_id": "3b39c5ab-e993-4816-814a-dff13f393a48",
+		"name": "Microservicios",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5391752"
+	},
+	"item": [
+		{
+			"name": "getUsuario Cloudway",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:10080/api/usuario/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "10080",
+					"path": [
+						"api",
+						"usuario",
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"nombres\": \"Juan\",\r\n  \"apellidos\": \"Pérez\",\r\n  \"password\": \"miContraseñaSegura123\",\r\n  \"email\": \"juan.perez@example.com\",\r\n  \"telefono\": \"123456789\",\r\n  \"direccion\": \"Calle Falsa 123\",\r\n  \"fecha_registros\": \"2024-05-22\",\r\n  \"roles\": [\r\n    {\r\n      \"id\": 1,\r\n      \"nombre\": \"ROLE_USER\"\r\n    },b\r\n    {\r\n      \"id\": 2,\r\n      \"nombre\": \"ROLE_ADMIN\"\r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8088/auth/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8088",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
