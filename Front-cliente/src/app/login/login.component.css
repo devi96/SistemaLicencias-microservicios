@@ -1,0 +1,50 @@
+/* Asegúrate de usar un fondo con un diseño limpio */
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Estilos de los campos de entrada */
+mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Estilo para los botones */
+button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+/* Fondo del botón */
+button.mat-raised-button {
+  background-color: #3f51b5; /* Color azul */
+  color: white;
+}
+
+button.mat-raised-button:disabled {
+  background-color: #c5cae9;
+  color: #9e9e9e;
+}
+
+/* Ajustar el diseño para pantallas más pequeñas */
+@media (max-width: 600px) {
+  .login-container {
+    margin: 20px;
+    padding: 15px;
+  }
+}

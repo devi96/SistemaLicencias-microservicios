@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    config:
+      uri: http://localhost:8888
+      profile: dev # cloud-gateway-dev.yml
+      enabled: true

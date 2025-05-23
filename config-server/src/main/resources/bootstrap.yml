@@ -1,0 +1,26 @@
+server:
+  port: 8888  # Puerto donde se expone el Config Server
+
+spring:
+  application:
+    name: config-server
+
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/devi96/config-server-licencia.git  # Ejemplo de repo donde se encuentran los archivos de configuración
+          cloneOnStart: true  # Clona el repo al iniciar el Config Server
+          username: ${GIT_USERNAME}  # Nombre de usuario para acceder al repo privado
+          password: ${GIT_PASSWORD}  # Contraseña para acceder al repo privado
+        encrypt:
+          enabled: true
+encrypt:
+    key: mitocode-key  # Clave para encriptar y desencriptar los archivos de configuración
+    
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: ${EUREKA.SERVER.HOST:http://localhost:8761/eureka}  # URL del servidor Eureka donde se registrará el Config Server
