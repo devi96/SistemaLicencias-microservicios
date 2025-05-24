@@ -23,7 +23,7 @@ public class RolEntity {
     
     private String descripcion;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<UserEntity> userEntities = new HashSet<>();
+    //@ManyToMany(mappedBy = "roles")
+    //private Set<UserEntity> userEntities = new HashSet<>();
 
 }

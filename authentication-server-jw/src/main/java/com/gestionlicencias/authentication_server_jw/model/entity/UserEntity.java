@@ -47,7 +47,7 @@ public class UserEntity implements UserDetails {
         @Column(nullable = false)
         private Boolean estado;
 
-        @ManyToMany
+        @ManyToMany(fetch = FetchType.EAGER)
         @JoinTable(
             name = "usuario_rol",  // nombre de la tabla intermedia
             joinColumns = @JoinColumn(name = "usuario_id"),  // FK a usuario

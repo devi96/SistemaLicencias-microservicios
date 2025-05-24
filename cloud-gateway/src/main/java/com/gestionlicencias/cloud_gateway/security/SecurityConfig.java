@@ -23,9 +23,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) throws Exception {
-        return http.authorizeExchange( exchange ->
-                        exchange.pathMatchers("/api/usuarios/**").hasAnyRole("ADMIN","USER")
-                                .anyExchange().authenticated())
+        return http.authorizeExchange( exchange -> exchange
+                        .pathMatchers("/api/usuarios/**").hasAnyRole("ADMIN","USER")
+                        .pathMatchers("/api/vehiculos/**").hasAnyRole("ADMIN","USER")
+                        .anyExchange().authenticated())
                 .addFilterAt(jwtAuthenticationFilter, SecurityWebFiltersOrder.AUTHORIZATION)
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .build();

@@ -33,7 +33,7 @@ public class SecurityService {
     private final RolRepository rolRepository;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
     @Transactional
     public String register(UserRegister userRegister){
@@ -65,6 +65,8 @@ public class SecurityService {
 
         UserEntity userEntity = userRepository.findByEmail(userCredentials.username())
                 .orElse(null);
+
+        log.info("valor de userEntity: " + userEntity);
 
         if (userEntity == null) {
             throw new UsernameNotFoundException(String.format("Usuario %s no encontrado en la BD",
