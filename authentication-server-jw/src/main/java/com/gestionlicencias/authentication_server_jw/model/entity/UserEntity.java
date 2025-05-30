@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "usuarios")
+@Table(name = "usuarios_auth")
 @Data
 @Builder
 public class UserEntity implements UserDetails {
@@ -24,25 +24,13 @@ public class UserEntity implements UserDetails {
         private Long id;
 
         @Column(nullable = false)
-        private String nombres;
-
-        @Column(nullable = false)
-        private String apellidos;
-
-        @Column(nullable = false)
         private String password;
 
         @Column(nullable = false, unique = true)
         private String email;
 
         @Column(nullable = false)
-        private String telefono;
-
-        @Column(nullable = false)
-        private String direccion;
-
-        @Column(nullable = false)
-        private LocalDate fecha_registros;
+        private LocalDate fechaRegistros;
 
         @Column(nullable = false)
         private Boolean estado;

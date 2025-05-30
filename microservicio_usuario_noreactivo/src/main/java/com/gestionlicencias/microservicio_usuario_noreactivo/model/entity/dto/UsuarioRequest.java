@@ -9,7 +9,6 @@ public record UsuarioRequest(
         String apellidos,
         String email,
         String telefono,
-        String direccion,
-        Boolean estado
+        String direccion
 ) {
 }

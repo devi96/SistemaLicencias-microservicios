@@ -2,6 +2,7 @@ package com.gestionlicencias.microservicio_vehiculo_noreactivo.controller;
 
 import com.gestionlicencias.microservicio_vehiculo_noreactivo.model.dto.VehiculoRequest;
 import com.gestionlicencias.microservicio_vehiculo_noreactivo.model.dto.VehiculoResponse;
+import com.gestionlicencias.microservicio_vehiculo_noreactivo.orchestrator.VehiculoOrquestadorService;
 import com.gestionlicencias.microservicio_vehiculo_noreactivo.services.VehiculoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 @RequestMapping("/vehiculos")
 public class VehiculoController {
     private final VehiculoService service;
+    private final VehiculoOrquestadorService orquestadorService;
 
     @GetMapping
     public ResponseEntity<List<VehiculoResponse>> findAll() {
@@ -26,7 +28,7 @@ public class VehiculoController {
 
     @PostMapping
     public ResponseEntity<VehiculoResponse> save(@RequestBody VehiculoRequest vehiculo) {
-        return ResponseEntity.ok(service.createVehiculo(vehiculo));
+        return ResponseEntity.ok(orquestadorService.registrarVehiculo(vehiculo));
     }
 
     @PutMapping("/{id}")
@@ -34,9 +36,10 @@ public class VehiculoController {
         VehiculoResponse response = service.updateVehiculo(id,vehiculo);
         return ResponseEntity.ok(response);
     }
-    @DeleteMapping
-    public void delete(@RequestParam Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.deleteVehiculo(id);
+        return ResponseEntity.noContent().build(); // 204 No Content
     }
 
 }

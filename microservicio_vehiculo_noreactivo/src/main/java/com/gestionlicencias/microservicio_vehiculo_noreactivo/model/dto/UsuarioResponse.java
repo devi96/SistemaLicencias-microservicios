@@ -1,7 +1,6 @@
-package com.gestionlicencias.microservicio_usuario_noreactivo.model.entity.dto;
+package com.gestionlicencias.microservicio_vehiculo_noreactivo.model.dto;
 
 import java.time.LocalDate;
-import java.util.List;
 
 
 public record UsuarioResponse(

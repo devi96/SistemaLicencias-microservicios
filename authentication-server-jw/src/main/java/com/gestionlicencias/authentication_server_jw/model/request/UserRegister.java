@@ -11,14 +11,11 @@ import java.util.List;
 import java.util.Set;
 
 public record UserRegister(
-
-     Long id,
      String nombres,
      String apellidos,
      String password,
      String email,
      String telefono,
      String direccion,
-     LocalDate fecha_registros,
      List<Long> rolId
 ){}

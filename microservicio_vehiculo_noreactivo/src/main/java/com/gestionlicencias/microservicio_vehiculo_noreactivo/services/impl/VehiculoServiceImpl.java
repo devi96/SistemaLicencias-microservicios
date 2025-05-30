@@ -78,7 +78,7 @@ public class VehiculoServiceImpl implements VehiculoService {
         entity.setAnio(request.anio());
         entity.setTipoVehiculo(request.tipoVehiculo());
         entity.setEstado(request.estado());
-        entity.setUsuarioId(request.usuarioId());
+        //entity.setUsuarioId(request.usuarioId());
 
         VehiculoEntity updated = repository.save(entity);
         return this.entityToDTO(updated);

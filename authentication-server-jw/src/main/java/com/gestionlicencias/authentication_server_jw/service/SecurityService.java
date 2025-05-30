@@ -3,6 +3,7 @@ package com.gestionlicencias.authentication_server_jw.service;
 import com.gestionlicencias.authentication_server_jw.config.JwtService;
 import com.gestionlicencias.authentication_server_jw.model.entity.RolEntity;
 import com.gestionlicencias.authentication_server_jw.model.entity.UserEntity;
+import com.gestionlicencias.authentication_server_jw.model.request.UserCreateEvent;
 import com.gestionlicencias.authentication_server_jw.model.request.UserCredentials;
 import com.gestionlicencias.authentication_server_jw.model.request.UserRegister;
 import com.gestionlicencias.authentication_server_jw.repository.RolRepository;
@@ -11,7 +12,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.swing.*;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -34,6 +38,9 @@ public class SecurityService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final KafkaTemplate<String, UserCreateEvent> kafkaTemplate;
+    @Value("${topic.usuario-auth-creacion}")
+    private String usuarioAuthTopic;
 
     @Transactional
     public String register(UserRegister userRegister){
@@ -46,15 +53,25 @@ public class SecurityService {
         UserEntity userEntity = UserEntity.builder()
                 .email(userRegister.email())
                 .password(passwordEncoder.encode(userRegister.password()))
-                .nombres(userRegister.nombres())
-                .apellidos(userRegister.apellidos())
-                .telefono(userRegister.telefono())
-                .direccion(userRegister.direccion())
-                .fecha_registros(userRegister.fecha_registros())
+                .fechaRegistros(LocalDate.now())
                 .roles(roles)
                 .estado(true)
                 .build();
         userRepository.save(userEntity);
+
+        //enviar a kafka el usuario registrado
+        UserCreateEvent evento = new UserCreateEvent(
+                userEntity.getId(),
+                userRegister.email(),
+                userRegister.nombres(),
+                userRegister.apellidos(),
+                userRegister.telefono(),
+                userRegister.direccion(),
+                LocalDate.now()
+        );
+
+        kafkaTemplate.send(usuarioAuthTopic, evento);
+
         return jwtService.generateToken(userEntity);
     }
     public String authenticate(UserCredentials userCredentials) {
@@ -65,35 +82,11 @@ public class SecurityService {
 
         UserEntity userEntity = userRepository.findByEmail(userCredentials.username())
                 .orElse(null);
-
         log.info("valor de userEntity: " + userEntity);
-
         if (userEntity == null) {
             throw new UsernameNotFoundException(String.format("Usuario %s no encontrado en la BD",
                     userCredentials.username()));
         }
-
         return jwtService.generateToken(userEntity);
     }
-
-    /*
-    public String authenticate(LoginRequest loginRequest) {
-        ResponseEntity<String> response = restTemplate.postForEntity("lb://service-usuario/usuarios/validate", loginRequest, String.class);
-        if (response.getStatusCode().is2xxSuccessful()) {
-            log.info("Usuario logueado correctamente");
-            return "";
-        } else {
-            log.info("Error al loguear al usuario");
-            return "Error al loguear el usuario";
-        }
-    }
-
-    public String register(UserEntity usuarioEntity) {
-        ResponseEntity<String> response = restTemplate.postForEntity("lb://service-usuario/usuarios/guardarUsuario", usuarioEntity, String.class);
-        if (response.getStatusCode().is2xxSuccessful()) {
-            return "Usuario registrado correctamente";
-        } else
-            return "Error al registrar el usuario";
-    }
-     */
 }

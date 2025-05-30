@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "perfil_usuarios")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,9 +27,6 @@ public class UsuarioEntity {
         @Column(nullable = false)
         private String apellidos;
 
-        @Column(nullable = false)
-        private String password;
-
         @Column(nullable = false, unique = true)
         private String email;
 
@@ -40,17 +37,9 @@ public class UsuarioEntity {
         private String direccion;
 
         @Column(nullable = false)
-        private LocalDate fecha_registros;
+        private LocalDate fechaRegistro;
 
         @Column(nullable = false)
-        private Boolean estado;
-
-        @ManyToMany
-        @JoinTable(
-            name = "usuario_rol",  // nombre de la tabla intermedia
-            joinColumns = @JoinColumn(name = "usuario_id"),  // FK a usuario
-            inverseJoinColumns = @JoinColumn(name = "rol_id") // FK a rol
-        )
-        private Set<RolEntity> roles;
- }
+        private Long usuarioAuthId;
+}
 
