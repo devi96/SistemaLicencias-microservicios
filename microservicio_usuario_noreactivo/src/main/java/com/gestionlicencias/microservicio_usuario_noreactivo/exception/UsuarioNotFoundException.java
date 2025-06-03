@@ -1,4 +1,4 @@
-package com.gestionlicencias.microservicio_licencia_noreactivo.exception;
+package com.gestionlicencias.microservicio_usuario_noreactivo.exception;
 
 public class UsuarioNotFoundException extends RuntimeException {
     public UsuarioNotFoundException(Long id) {

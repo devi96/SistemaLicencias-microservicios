@@ -2,10 +2,12 @@ package com.gestionlicencias.microservicio_licencia_noreactivo.controller;
 
 import com.gestionlicencias.microservicio_licencia_noreactivo.model.dto.LicenciaRequest;
 import com.gestionlicencias.microservicio_licencia_noreactivo.model.dto.LicenciaResponse;
+import com.gestionlicencias.microservicio_licencia_noreactivo.orchestrator.LicenciaOrquestadorService;
 import com.gestionlicencias.microservicio_licencia_noreactivo.services.LicenciaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,6 +21,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping("/licencias")
 public class LicenciaController {
     private final LicenciaService service;
+    private final LicenciaOrquestadorService orquestadorService;
 
     @GetMapping
     public ResponseEntity<List<LicenciaResponse>> getLicencias() {
@@ -31,19 +34,19 @@ public class LicenciaController {
                 .orElse(ResponseEntity.notFound().build());
     }
     @PutMapping("/{id}")
-    public ResponseEntity<LicenciaResponse> updateLicencia(@PathVariable Long id, @RequestBody LicenciaRequest licencia) {
+    public ResponseEntity<LicenciaResponse> updateLicencia(@PathVariable Long id, @Validated @RequestBody LicenciaRequest licencia) {
         LicenciaResponse response = service.updateLicencia(id, licencia);
         return ResponseEntity.ok(response);
     }
     @PostMapping
-    public ResponseEntity<EntityModel<LicenciaResponse>> createLicencia(@RequestBody LicenciaRequest licencia) {
-        LicenciaResponse response = service.createLicencia(licencia);
+    public ResponseEntity<EntityModel<LicenciaResponse>> createLicencia(@Validated @RequestBody LicenciaRequest licencia) {
+        LicenciaResponse response = orquestadorService.createLicencia(licencia);
         EntityModel<LicenciaResponse> resource = EntityModel.of(response);
         resource.add(linkTo(methodOn(LicenciaController.class).getLicenciaById(response.id())).withSelfRel());
         URI location = linkTo(methodOn(LicenciaController.class).getLicenciaById(response.id())).toUri();
         return ResponseEntity.created(location).body(resource);
     }
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteLicencia(@PathVariable Long id) {
         service.deleteLicencia(id);
         return ResponseEntity.noContent().build();

@@ -2,6 +2,7 @@ package com.gestionlicencias.authentication_server_jw.expose.web;
 
 import com.gestionlicencias.authentication_server_jw.model.request.UserCredentials;
 import com.gestionlicencias.authentication_server_jw.model.request.UserRegister;
+import com.gestionlicencias.authentication_server_jw.model.response.AuthResponse;
 import com.gestionlicencias.authentication_server_jw.service.SecurityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +18,14 @@ public class SecurityController {
 
     private final SecurityService securityService;
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserRegister userRegister) {
-        return ResponseEntity.ok(securityService.register(userRegister));
+    public ResponseEntity<AuthResponse> register(@RequestBody UserRegister userRegister) {
+        String token = securityService.register(userRegister);
+        return ResponseEntity.ok(new AuthResponse(token));
     }
     @PostMapping("/authenticate")
-    public ResponseEntity<String> authenticate(@RequestBody UserCredentials userCredentials) {
-        return ResponseEntity.ok(securityService.authenticate(userCredentials));
+    public ResponseEntity<AuthResponse> authenticate(@RequestBody UserCredentials userCredentials) {
+        String token = securityService.authenticate(userCredentials);
+        return ResponseEntity.ok(new AuthResponse(token));
     }
 
 }

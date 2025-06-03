@@ -42,9 +42,9 @@ public class LicenciaServiceImpl implements LicenciaService {
                 .tipoLicencia(request.tipoLicencia())
                 .estado(true)
                 .fechaEmision(LocalDate.now())
-                .fechaVencimiento(LocalDate.now().plusMonths(1)) // Asumiendo que la licencia es válida por un año
+                .fechaVencimiento(request.fechaVencimiento()) // Asumiendo que la licencia es válida por un año
                 .usuarioId(request.usuarioId()).build();
-        //Validar que el usuario existe y tiene un vehiculo asociado
+
         return convertToDTO(licenciaRepository.save(entity));
     }
 

@@ -1,4 +1,4 @@
-package com.gestionlicencias.microservicio_vehiculo_noreactivo.model.dto;
+package com.gestionlicencias.microservicio_licencia_noreactivo.model.dto;
 
 import java.time.LocalDate;
 

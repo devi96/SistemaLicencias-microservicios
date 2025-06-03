@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';  // Asegúrate de importar el LoginComponent
+import { LoginComponent } from './auth/login/login.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },  // Redirige al login por defecto
-  { path: 'login', component: LoginComponent },  // Ruta para el login
   // Otras rutas como el dashboard u otras secciones
+  { path: 'login', component: LoginComponent },
+  // Aquí puedes agregar más rutas según tu aplicación
+  { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) }
 ];
 
 @NgModule({

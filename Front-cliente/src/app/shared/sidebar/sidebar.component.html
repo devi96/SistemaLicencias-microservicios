@@ -1,0 +1,50 @@
+<!-- sidebar.component.html -->
+<nav class="h-full bg-gray-800 text-white w-64 flex flex-col shadow-md">
+  <div class="p-4 text-xl font-bold border-b border-gray-700">
+    Panel de Usuario
+  </div>
+
+  <ul class="flex-1 px-4 py-2 space-y-2 text-sm">
+    <!-- Usuario -->
+    <li>
+      <p class="text-gray-400 uppercase tracking-wide text-xs">Usuario</p>
+      <a routerLink="/dashboard/usuarios/perfil" routerLinkActive="bg-gray-700"
+         class="block px-3 py-2 rounded hover:bg-gray-700">
+        Ver Perfil
+      </a>
+    </li>
+
+    <!-- Vehículos -->
+    <li>
+      <p class="text-gray-400 uppercase tracking-wide text-xs mt-4">Vehículos</p>
+      <a routerLink="/dashboard/vehiculos" routerLinkActive="bg-gray-700"
+         class="block px-3 py-2 rounded hover:bg-gray-700">
+        Listar Vehículos
+      </a>
+      <a routerLink="/dashboard/vehiculos/crear" routerLinkActive="bg-gray-700"
+         class="block px-3 py-2 rounded hover:bg-gray-700">
+        Registrar Vehículo
+      </a>
+    </li>
+
+    <!-- Licencias -->
+    <li>
+      <p class="text-gray-400 uppercase tracking-wide text-xs mt-4">Licencias</p>
+      <a routerLink="/dashboard/licencias" routerLinkActive="bg-gray-700"
+         class="block px-3 py-2 rounded hover:bg-gray-700">
+        Mis Licencias
+      </a>
+      <a routerLink="/dashboard/licencias/crear" routerLinkActive="bg-gray-700"
+         class="block px-3 py-2 rounded hover:bg-gray-700">
+        Solicitar Licencia
+      </a>
+    </li>
+  </ul>
+
+  <!-- Cierre de sesión -->
+  <div class="p-4 border-t border-gray-700">
+    <button (click)="logout()" class="w-full text-left px-3 py-2 bg-red-600 hover:bg-red-700 rounded">
+      Cerrar sesión
+    </button>
+  </div>
+</nav>

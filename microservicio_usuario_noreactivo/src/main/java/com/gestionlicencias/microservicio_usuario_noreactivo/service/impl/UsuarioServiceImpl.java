@@ -1,5 +1,6 @@
 package com.gestionlicencias.microservicio_usuario_noreactivo.service.impl;
 
+import com.gestionlicencias.microservicio_usuario_noreactivo.exception.UsuarioNotFoundException;
 import com.gestionlicencias.microservicio_usuario_noreactivo.model.entity.UsuarioEntity;
 import com.gestionlicencias.microservicio_usuario_noreactivo.model.entity.dto.UserCreateEvent;
 import com.gestionlicencias.microservicio_usuario_noreactivo.model.entity.dto.UsuarioRequest;
@@ -37,7 +38,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                     usuarioEntity.setTelefono(actualizar.telefono());
                     return usuarioRepository.save(usuarioEntity);
                 }).map(this::convertirEntityUsuarioADTO)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con id: " + id));
+                .orElseThrow(() -> new UsuarioNotFoundException(id));
     }
 
     @KafkaListener(
@@ -45,7 +46,6 @@ public class UsuarioServiceImpl implements UsuarioService {
             groupId = "usuario-service-group",
             containerFactory = "kafkaListenerContainerFactory"
     )
-
     @Override
     public void crearPerfilDesdeEvento (UserCreateEvent event) {
         this.crearPerfil(event);

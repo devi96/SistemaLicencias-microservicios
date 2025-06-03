@@ -1,5 +1,7 @@
 package com.gestionlicencias.cloud_gateway.security;
 
+import com.gestionlicencias.cloud_gateway.exception.JwtExpiredException;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +43,6 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
                             .map(SimpleGrantedAuthority::new)
                             .collect(Collectors.toList());
                     return new UsernamePasswordAuthenticationToken(username, null, authorities);
-                })
-                ;
+                });
     }
 }

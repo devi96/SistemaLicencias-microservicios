@@ -1,4 +1,10 @@
 package com.gestionlicencias.cloud_gateway.exception;
 
-public record CustomErrorResponse() {
+import java.time.LocalDateTime;
+
+public record CustomErrorResponse(
+        LocalDateTime datetime,
+        String message,
+        String messageDetail
+) {
 }

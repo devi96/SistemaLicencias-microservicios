@@ -1,7 +1,7 @@
 HELP.md
 /config-server-licencia/
 /workspace/
-/docker/
+/docker/postgres_data/
 **/target/
 **/.env
 !.mvn/wrapper/maven-wrapper.jar

@@ -1,5 +1,6 @@
 package com.gestionlicencias.microservicio_vehiculo_noreactivo.services.impl;
 
+import com.gestionlicencias.microservicio_vehiculo_noreactivo.exception.VehiculoNotFoundException;
 import com.gestionlicencias.microservicio_vehiculo_noreactivo.model.dto.VehiculoRequest;
 import com.gestionlicencias.microservicio_vehiculo_noreactivo.model.dto.VehiculoResponse;
 import com.gestionlicencias.microservicio_vehiculo_noreactivo.model.entity.VehiculoEntity;
@@ -68,7 +69,7 @@ public class VehiculoServiceImpl implements VehiculoService {
     @Override
     public VehiculoResponse updateVehiculo(Long vehiculoId, VehiculoRequest request) {
         VehiculoEntity entity = repository.findById(vehiculoId)
-                .orElseThrow(() -> new RuntimeException("Vehículo no encontrado"));
+                .orElseThrow(() -> new VehiculoNotFoundException(vehiculoId));
 
         // Modificar los campos existentes, no crear uno nuevo
         entity.setMarca(request.marca());

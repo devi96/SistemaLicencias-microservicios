@@ -87,6 +87,7 @@ public class SecurityService {
             throw new UsernameNotFoundException(String.format("Usuario %s no encontrado en la BD",
                     userCredentials.username()));
         }
+
         return jwtService.generateToken(userEntity);
     }
 }
