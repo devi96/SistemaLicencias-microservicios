@@ -25,7 +25,10 @@ public class VehiculoController {
     public ResponseEntity<VehiculoResponse> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getVehiculoById(id).orElse(null));
     }
-
+    @GetMapping("/usuario/{id}")
+    public ResponseEntity<List<VehiculoResponse>> findByUserId(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getVehiculoByUserId(id));
+    }
     @PostMapping
     public ResponseEntity<VehiculoResponse> save(@RequestBody VehiculoRequest vehiculo) {
         return ResponseEntity.ok(orquestadorService.registrarVehiculo(vehiculo));

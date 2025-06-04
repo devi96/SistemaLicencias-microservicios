@@ -1,1 +1,103 @@
-<p>form-vehiculo works!</p>
+<div class="max-w-xl mx-auto p-6 bg-white rounded shadow-md mt-8">
+  <h2 class="text-2xl font-semibold mb-6 text-gray-900">
+    {{ isEditMode ? 'Editar Vehículo' : 'Registrar Vehículo' }}
+  </h2>
+
+  <form [formGroup]="vehiculoForm" (ngSubmit)="submitForm()" class="space-y-6">
+
+    <div>
+      <label class="block mb-1 font-medium text-gray-900">Marca:</label>
+      <input formControlName="marca" type="text"
+             class="w-full px-3 py-2 border rounded text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+             placeholder="Ej. Toyota" />
+      <p *ngIf="vehiculoForm.get('marca')?.invalid && vehiculoForm.get('marca')?.touched"
+         class="text-sm text-red-600 mt-1">
+        La marca es requerida y debe tener al menos 2 caracteres.
+      </p>
+    </div>
+
+    <div>
+      <label class="block mb-1 font-medium text-gray-900">Modelo:</label>
+      <input formControlName="modelo" type="text"
+             class="w-full px-3 py-2 border rounded text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+             placeholder="Ej. Corolla" />
+      <p *ngIf="vehiculoForm.get('modelo')?.invalid && vehiculoForm.get('modelo')?.touched"
+         class="text-sm text-red-600 mt-1">
+        El modelo es requerido y debe tener al menos 2 caracteres.
+      </p>
+    </div>
+
+    <div>
+      <label class="block mb-1 font-medium text-gray-900">Color:</label>
+      <input formControlName="color" type="text"
+             class="w-full px-3 py-2 border rounded text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+             placeholder="Ej. Rojo" />
+      <p *ngIf="vehiculoForm.get('color')?.invalid && vehiculoForm.get('color')?.touched"
+         class="text-sm text-red-600 mt-1">
+        El color es requerido.
+      </p>
+    </div>
+
+    <div>
+      <label class="block mb-1 font-medium text-gray-900">Placa:</label>
+      <input formControlName="placa" type="text"
+             class="w-full px-3 py-2 border rounded text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+             placeholder="Ej. ABC1234" />
+      <p *ngIf="vehiculoForm.get('placa')?.invalid && vehiculoForm.get('placa')?.touched"
+         class="text-sm text-red-600 mt-1">
+        La placa es requerida y debe tener entre 6 y 8 caracteres alfanuméricos.
+      </p>
+    </div>
+
+    <div>
+      <label class="block mb-1 font-medium text-gray-900">Año:</label>
+      <input formControlName="anio" type="number"
+             class="w-full px-3 py-2 border rounded text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+             placeholder="Ej. 2020" />
+      <p *ngIf="vehiculoForm.get('anio')?.invalid && vehiculoForm.get('anio')?.touched"
+         class="text-sm text-red-600 mt-1">
+        El año es requerido y debe ser entre 1900 y {{ maxYear }}.
+      </p>
+    </div>
+
+    <div>
+      <label class="block mb-1 font-medium text-gray-900">Tipo de Vehículo:</label>
+      <input formControlName="tipoVehiculo" type="text"
+             class="w-full px-3 py-2 border rounded text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+             placeholder="Ej. Sedan, SUV" />
+      <p *ngIf="vehiculoForm.get('tipoVehiculo')?.invalid && vehiculoForm.get('tipoVehiculo')?.touched"
+         class="text-sm text-red-600 mt-1">
+        El tipo de vehículo es requerido.
+      </p>
+    </div>
+
+    <!-- Campo estado -->
+    <div>
+      <label class="block mb-1 font-medium text-gray-900">Estado:</label>
+      <select formControlName="estado"
+              [disabled]="!isEditMode"
+              class="w-full px-3 py-2 border rounded text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <option value="Activo">Activo</option>
+        <option value="Inactivo">Inactivo</option>
+      </select>
+      <p *ngIf="vehiculoForm.get('estado')?.invalid && vehiculoForm.get('estado')?.touched"
+        class="text-sm text-red-600 mt-1">
+        El estado es requerido.
+      </p>
+    </div>
+
+    <!-- Campo usuarioId oculto -->
+    <input formControlName="usuarioId" type="hidden" />
+
+    <button type="submit"
+            [disabled]="isLoading"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed transition">
+      {{ isLoading ? 'Procesando...' : (isEditMode ? 'Actualizar' : 'Registrar') }}
+    </button>
+
+  </form>
+
+  <div *ngIf="errorMessage" class="mt-4 text-red-600 font-semibold">
+    {{ errorMessage }}
+  </div>
+</div>

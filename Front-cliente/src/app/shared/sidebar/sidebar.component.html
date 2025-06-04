@@ -8,7 +8,8 @@
     <!-- Usuario -->
     <li>
       <p class="text-gray-400 uppercase tracking-wide text-xs">Usuario</p>
-      <a routerLink="/dashboard/usuarios/perfil" routerLinkActive="bg-gray-700"
+      <a routerLink="/dashboard/usuarios/perfil"
+         routerLinkActive="bg-gray-700"
          class="block px-3 py-2 rounded hover:bg-gray-700">
         Ver Perfil
       </a>
@@ -17,12 +18,16 @@
     <!-- Vehículos -->
     <li>
       <p class="text-gray-400 uppercase tracking-wide text-xs mt-4">Vehículos</p>
-      <a routerLink="/dashboard/vehiculos" routerLinkActive="bg-gray-700"
-         class="block px-3 py-2 rounded hover:bg-gray-700">
+      <a routerLink="/dashboard/vehiculos/listar"
+        routerLinkActive="bg-gray-700"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="block px-3 py-2 rounded hover:bg-gray-700">
         Listar Vehículos
       </a>
-      <a routerLink="/dashboard/vehiculos/crear" routerLinkActive="bg-gray-700"
-         class="block px-3 py-2 rounded hover:bg-gray-700">
+      <a routerLink="/dashboard/vehiculos/crear"
+        routerLinkActive="bg-gray-700"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="block px-3 py-2 rounded hover:bg-gray-700">
         Registrar Vehículo
       </a>
     </li>
@@ -30,12 +35,14 @@
     <!-- Licencias -->
     <li>
       <p class="text-gray-400 uppercase tracking-wide text-xs mt-4">Licencias</p>
-      <a routerLink="/dashboard/licencias" routerLinkActive="bg-gray-700"
-         class="block px-3 py-2 rounded hover:bg-gray-700">
+      <a routerLink="/dashboard/licencias/listar" routerLinkActive="bg-gray-700"
+         class="block px-3 py-2 rounded hover:bg-gray-700"
+         [routerLinkActiveOptions]="{ exact: true }">
         Mis Licencias
       </a>
       <a routerLink="/dashboard/licencias/crear" routerLinkActive="bg-gray-700"
-         class="block px-3 py-2 rounded hover:bg-gray-700">
+         class="block px-3 py-2 rounded hover:bg-gray-700"
+         [routerLinkActiveOptions]="{ exact: true }">
         Solicitar Licencia
       </a>
     </li>

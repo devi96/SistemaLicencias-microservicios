@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface VehiculoService {
     List<VehiculoResponse> getAllVehiculos();
     Optional<VehiculoResponse> getVehiculoById(Long vehiculoId);
+    List<VehiculoResponse> getVehiculoByUserId(Long userId);
     VehiculoResponse createVehiculo(VehiculoRequest request);
     VehiculoResponse updateVehiculo(Long vehiculoId, VehiculoRequest request);
     void deleteVehiculo(Long vehiculoId);

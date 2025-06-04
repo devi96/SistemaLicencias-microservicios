@@ -14,7 +14,7 @@ export class UsuarioService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private AuthService: AuthService
+    private authService: AuthService
   ) { }
 
   getUsuarios() {
@@ -25,7 +25,7 @@ export class UsuarioService {
     return this.http.get(`${this.apiUrl}/${id}`);
   }
   getUsuarioByAuthId(authId?: number): Observable<UsuarioResponse> {
-    const id = authId ?? this.AuthService.getUsuarioAuthId();
+    const id = authId ?? this.authService.getUsuarioAuthId();
     if (!id) throw new Error('Usuario no autenticado');
     return this.http.get<UsuarioResponse>(`${this.apiUrl}/auth/${id}`);
   }

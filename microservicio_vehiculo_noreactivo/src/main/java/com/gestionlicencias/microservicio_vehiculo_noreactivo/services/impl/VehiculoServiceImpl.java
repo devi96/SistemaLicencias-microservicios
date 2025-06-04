@@ -20,6 +20,13 @@ public class VehiculoServiceImpl implements VehiculoService {
 
     private final VehiculoRepository repository;
 
+    @Override
+    public List<VehiculoResponse> getVehiculoByUserId(Long userId) {
+        return repository.findByUsuarioId(userId).stream()
+                .map(this::entityToDTO)
+                .toList();
+    }
+
     private VehiculoResponse entityToDTO(VehiculoEntity vehiculo){
         return new VehiculoResponse(
                 vehiculo.getId(),

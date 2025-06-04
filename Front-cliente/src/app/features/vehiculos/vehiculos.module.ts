@@ -5,6 +5,7 @@ import { ListaVehiculosComponent } from './lista-vehiculos/lista-vehiculos.compo
 import { VehiculoComponent } from './vehiculo/vehiculo.component';
 import { FormVehiculoComponent } from './form-vehiculo/form-vehiculo.component';
 import { VehiculoRoutingModule } from './vehiculo-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -17,7 +18,8 @@ import { VehiculoRoutingModule } from './vehiculo-routing.module';
   ],
   imports: [
     CommonModule,
-    VehiculoRoutingModule
+    VehiculoRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class VehiculosModule { }

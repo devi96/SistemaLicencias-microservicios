@@ -10,7 +10,7 @@ const routes: Routes =[{
   component: VehiculoComponent,
   children: [
     { path: 'listar', component: ListaVehiculosComponent },
-    { path: 'detalle/:id', component: DetalleVehiculoComponent },
+    { path: 'detalle/:id', component: FormVehiculoComponent },
     { path: 'crear', component: FormVehiculoComponent},
     { path: '', redirectTo: 'listar', pathMatch: 'full' } // ruta por defecto
   ]
