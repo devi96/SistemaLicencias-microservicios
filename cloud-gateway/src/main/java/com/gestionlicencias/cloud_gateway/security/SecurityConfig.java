@@ -1,5 +1,6 @@
 package com.gestionlicencias.cloud_gateway.security;
 
+import jakarta.ws.rs.HttpMethod;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,14 +24,16 @@ public class SecurityConfig {
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) throws Exception {
-        return http.authorizeExchange( exchange -> exchange
+        return http
+                .csrf(ServerHttpSecurity.CsrfSpec::disable)
+                .authorizeExchange( exchange -> exchange
+                        .pathMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Preflight
+                        .pathMatchers("/api/auth/**").permitAll()
                         .pathMatchers("/api/usuarios/**").hasAnyRole("ADMIN","USER")
                         .pathMatchers("/api/vehiculos/**").hasAnyRole("ADMIN","USER")
                         .pathMatchers("/api/licencias/**").hasAnyRole("ADMIN","USER")
-                        .pathMatchers("api/auth/**").permitAll()
                         .anyExchange().authenticated())
                 .addFilterAt(jwtAuthenticationFilter, SecurityWebFiltersOrder.AUTHORIZATION)
-                .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .build();
     }
 }

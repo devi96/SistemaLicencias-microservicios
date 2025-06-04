@@ -3,13 +3,18 @@ import { ListaVehiculosComponent } from "./lista-vehiculos/lista-vehiculos.compo
 import { DetalleVehiculoComponent } from "./detalle-vehiculo/detalle-vehiculo.component";
 import { NgModule } from "@angular/core";
 import { FormVehiculoComponent } from "./form-vehiculo/form-vehiculo.component";
+import { VehiculoComponent } from "./vehiculo/vehiculo.component";
 
-const routes: Routes = [
-  { path: 'listar', component: ListaVehiculosComponent },
-  { path: 'detalle', component: DetalleVehiculoComponent },
-  { path: 'crear', component: FormVehiculoComponent}
-];
-
+const routes: Routes =[{
+  path: '',
+  component: VehiculoComponent,
+  children: [
+    { path: 'listar', component: ListaVehiculosComponent },
+    { path: 'detalle/:id', component: DetalleVehiculoComponent },
+    { path: 'crear', component: FormVehiculoComponent},
+    { path: '', redirectTo: 'listar', pathMatch: 'full' } // ruta por defecto
+  ]
+}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

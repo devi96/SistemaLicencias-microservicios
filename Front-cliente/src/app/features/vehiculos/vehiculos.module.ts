@@ -4,6 +4,7 @@ import { DetalleVehiculoComponent } from './detalle-vehiculo/detalle-vehiculo.co
 import { ListaVehiculosComponent } from './lista-vehiculos/lista-vehiculos.component';
 import { VehiculoComponent } from './vehiculo/vehiculo.component';
 import { FormVehiculoComponent } from './form-vehiculo/form-vehiculo.component';
+import { VehiculoRoutingModule } from './vehiculo-routing.module';
 
 
 
@@ -11,11 +12,12 @@ import { FormVehiculoComponent } from './form-vehiculo/form-vehiculo.component';
   declarations: [
     DetalleVehiculoComponent,
     ListaVehiculosComponent,
+    FormVehiculoComponent,
     VehiculoComponent,
-    FormVehiculoComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    VehiculoRoutingModule
   ]
 })
 export class VehiculosModule { }

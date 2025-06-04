@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { DetalleLicenciaComponent } from './detalle-licencia/detalle-licencia.component';
 import { ListaLicenciaComponent } from './lista-licencia/lista-licencia.component';
 import { LicenciaComponent } from './licencia/licencia.component';
+import { FormLicenciaComponent } from './form-licencia/form-licencia.component';
+import { LicenciaRoutingModule } from './licencia-routing.module';
 
 
 
@@ -10,10 +12,12 @@ import { LicenciaComponent } from './licencia/licencia.component';
   declarations: [
     DetalleLicenciaComponent,
     ListaLicenciaComponent,
-    LicenciaComponent
+    LicenciaComponent,
+    FormLicenciaComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    LicenciaRoutingModule
   ]
 })
 export class LicenciasModule { }

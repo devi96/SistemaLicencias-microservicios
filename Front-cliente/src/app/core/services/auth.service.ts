@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { RegisterRequest } from '../model/register-request.model';
+import { LoginRequest } from '../model/login-request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,8 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  login(username: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/authenticate`, { username, password }).pipe(
+  login(data: LoginRequest): Observable<any> {
+    return this.http.post(`${this.apiUrl}/authenticate`, data).pipe(
       tap((response: any) => {
         localStorage.setItem('token', response.token); // Guarda token
       })
@@ -25,7 +26,6 @@ export class AuthService {
   }
   logout(): void {
     localStorage.removeItem('token'); // Elimina token
-    this.router.navigate(['/login']); // Redirige al login
   }
 
   getToken(): string | null {
@@ -36,4 +36,20 @@ export class AuthService {
     return !!this.getToken(); // Retorna true si hay token
   }
 
+  getPayload(): any | null {
+    const token = this.getToken();
+    if (!token) return null;
+
+    const payload = token.split('.')[1];
+    try {
+      return JSON.parse(atob(payload));
+    } catch (e) {
+      console.error('Error decodificando el token', e);
+      return null;
+    }
+  }
+  getUsuarioAuthId(): number | null {
+    const payload = this.getPayload();
+    return payload?.id ?? null; // Cambia a la propiedad correcta si es otro nombre
+  }
 }

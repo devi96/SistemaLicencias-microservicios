@@ -8,6 +8,7 @@ import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,6 +28,10 @@ public class JwtAuthenticationFilter implements WebFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+        if (exchange.getRequest().getMethod() == HttpMethod.OPTIONS) {
+            // Dejar pasar preflight sin validación
+            return chain.filter(exchange);
+        }
         return getToken(exchange)
                 .flatMap(this::authenticateToken)
                 .flatMap(auth -> continueChainWithAuth(exchange, chain, auth))
@@ -35,24 +40,6 @@ public class JwtAuthenticationFilter implements WebFilter {
                 )
                 //.onErrorMap(Exception.class, ex -> new RuntimeException("Error inesperado de autenticación", ex))
                 .switchIfEmpty(chain.filter(exchange));
-
-        /*return Mono.justOrEmpty(exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION))
-                .filter(authHeader -> authHeader.startsWith("Bearer "))
-                .switchIfEmpty(chain.filter(exchange).then(Mono.empty()))
-                .map(token -> token.replace("Bearer ", ""))
-                .flatMap(token -> authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(null, token)))
-                .flatMap(auth -> chain.filter(exchange).contextWrite(ReactiveSecurityContextHolder.withAuthentication(auth)))
-                .switchIfEmpty(chain.filter(exchange))
-                .onErrorResume(SignatureException.class, e -> {
-                    exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                    return exchange.getResponse().setComplete();
-                })
-                .onErrorResume(Exception.class, e -> {
-                    log.error("Error during authentication: {}", e.getMessage());
-                    exchange.getResponse().setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
-                    return exchange.getResponse().setComplete();
-                });
-        */
     }
     private Mono<String> getToken(ServerWebExchange exchange) {
         return Mono.justOrEmpty(exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION))

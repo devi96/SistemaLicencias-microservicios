@@ -3,19 +3,18 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AuthModule } from './features/auth/auth.module';
-import { DashboardModule } from './features/dashboard/dashboard.module';
+import { DashboardComponent } from './features/dashboard/dashboard.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { TokenInterceptor } from './core/interceptors/token.interceptor';
 
 @NgModule({
   declarations: [
-    AppComponent,
-
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AuthModule,
-    DashboardModule
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

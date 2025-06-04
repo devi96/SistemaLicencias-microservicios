@@ -16,7 +16,9 @@ import java.util.stream.Collectors;
 public interface UsuarioService {
     public List<UsuarioResponse> listarUsuarios();
     public Optional<UsuarioResponse> buscarPorId(Long id);
+    public Optional<UsuarioResponse> buscarPorIdAuth(Long id);
     public UsuarioResponse actualizarUsuario(Long id, UsuarioRequest actualizar);
     public void crearPerfilDesdeEvento (UserCreateEvent event);
     public void eliminarUsuario(Long id);
+
 }

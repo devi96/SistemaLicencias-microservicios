@@ -32,6 +32,11 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .map(this::convertirEntityUsuarioADTO);
     }
     @Override
+    public Optional<UsuarioResponse> buscarPorIdAuth(Long id) {
+        return usuarioRepository.findByUsuarioAuthId(id)
+                .map(this::convertirEntityUsuarioADTO);
+    }
+    @Override
     public UsuarioResponse actualizarUsuario(Long id, UsuarioRequest actualizar) {
         return usuarioRepository.findById(id).map(usuarioEntity -> {
                     usuarioEntity.setNombres(actualizar.nombres());

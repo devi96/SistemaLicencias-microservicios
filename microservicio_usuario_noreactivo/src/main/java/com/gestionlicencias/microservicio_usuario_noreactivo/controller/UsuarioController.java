@@ -32,6 +32,12 @@ public class UsuarioController {
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+    @GetMapping("/auth/{usuarioAuthId}")
+    public ResponseEntity<UsuarioResponse> buscarPorUsuarioAuthId(@PathVariable Long usuarioAuthId) {
+        return usuarioService.buscarPorIdAuth(usuarioAuthId)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioResponse> actualizarUsuario(@PathVariable Long id, @RequestBody UsuarioRequest request) {

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
 import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
 import { UsuarioComponent } from './usuario/usuario.component';
+import { FormUsuarioComponent } from './form-usuario/form-usuario.component';
+import { UsuarioRoutingModule } from './usuario-routing.module';
 
 
 
@@ -10,10 +12,12 @@ import { UsuarioComponent } from './usuario/usuario.component';
   declarations: [
     ListaUsuariosComponent,
     PerfilUsuarioComponent,
-    UsuarioComponent
+    UsuarioComponent,
+    FormUsuarioComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    UsuarioRoutingModule
   ]
 })
 export class UsuariosModule { }
