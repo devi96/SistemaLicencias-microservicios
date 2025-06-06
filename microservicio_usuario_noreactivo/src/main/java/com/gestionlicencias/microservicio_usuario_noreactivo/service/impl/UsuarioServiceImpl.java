@@ -1,5 +1,6 @@
 package com.gestionlicencias.microservicio_usuario_noreactivo.service.impl;
 
+import com.gestionlicencias.microservicio_usuario_noreactivo.Mapper.UsuarioMapper;
 import com.gestionlicencias.microservicio_usuario_noreactivo.exception.UsuarioNotFoundException;
 import com.gestionlicencias.microservicio_usuario_noreactivo.model.entity.UsuarioEntity;
 import com.gestionlicencias.microservicio_usuario_noreactivo.model.entity.dto.UserCreateEvent;
@@ -19,22 +20,22 @@ import java.util.stream.Collectors;
 public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
-
+    private final UsuarioMapper mapper;
     @Override
     public List<UsuarioResponse> listarUsuarios() {
         return usuarioRepository.findAll().stream()
-                .map(this::convertirEntityUsuarioADTO)
+                .map(this.mapper::toDtoUsuarioResponse)
                 .collect(Collectors.toList());
     }
     @Override
     public Optional<UsuarioResponse> buscarPorId(Long id) {
         return usuarioRepository.findById(id)
-                .map(this::convertirEntityUsuarioADTO);
+                .map(this.mapper::toDtoUsuarioResponse);
     }
     @Override
     public Optional<UsuarioResponse> buscarPorIdAuth(Long id) {
         return usuarioRepository.findByUsuarioAuthId(id)
-                .map(this::convertirEntityUsuarioADTO);
+                .map(this.mapper::toDtoUsuarioResponse);
     }
     @Override
     public UsuarioResponse actualizarUsuario(Long id, UsuarioRequest actualizar) {
@@ -42,7 +43,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                     usuarioEntity.setNombres(actualizar.nombres());
                     usuarioEntity.setTelefono(actualizar.telefono());
                     return usuarioRepository.save(usuarioEntity);
-                }).map(this::convertirEntityUsuarioADTO)
+                }).map(this.mapper::toDtoUsuarioResponse)
                 .orElseThrow(() -> new UsuarioNotFoundException(id));
     }
 
@@ -72,15 +73,5 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .usuarioAuthId(event.usuarioId())
                 .build());
     }
-    private UsuarioResponse convertirEntityUsuarioADTO(UsuarioEntity user ){
-        return new UsuarioResponse(
-                user.getId(),
-                user.getNombres(),
-                user.getApellidos(),
-                user.getEmail(),
-                user.getTelefono(),
-                user.getDireccion(),
-                user.getFechaRegistro()
-        );
-    }
+
 }

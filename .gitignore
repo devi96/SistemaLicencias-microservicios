@@ -2,6 +2,8 @@ HELP.md
 /config-server-licencia/
 /workspace/
 /docker/postgres_data/
+/docker/sonarqube_data/
+/docker/sonarqube_extensions/
 **/target/
 **/.env
 !.mvn/wrapper/maven-wrapper.jar
