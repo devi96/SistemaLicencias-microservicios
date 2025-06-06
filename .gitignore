@@ -4,6 +4,8 @@ HELP.md
 /docker/postgres_data/
 /docker/sonarqube_data/
 /docker/sonarqube_extensions/
+/docker/app-compose.yml
+/docker/Docker-compose-app/
 **/target/
 **/.env
 !.mvn/wrapper/maven-wrapper.jar
