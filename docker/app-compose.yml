@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  config-server:
+    image: devi96/config-server:1.0
+    ports:
+      - "8888:8888"
+    environment:
+      - GIT_USERNAME=${GIT_USERNAME}
+      - GIT_PASSWORD=${GIT_PASSWORD}
+      - EUREKA.SERVER.HOST=http://discovery-server:8761/eureka
+      - GIT_URI=${GIT_URI}
+    networks:
+      - app-network
+    depends_on:
+      - discovery-server
+      
+  discovery-server:
+    image: devi96/discovery-server:1.0
+    ports:
+      - "8761:8761"
+    networks:
+      - app-network
+
+  cloud-gateway:
+    image: devi96/cloud-gateway:1.0
+    ports:
+      - "8080:8080"
+    environment:
+      - CONFIG_SERVER_URI=${CONFIG_SERVER_URI}
+      - CONFIG_PROFILE=${CONFIG_PROFILE}
+    networks:
+      - app-network
+    depends_on:
+      - config-server
+
+  microservicio-usuario:
+    image: devi96/microservicio_usuario_noreactivo:1.0
+    environment:
+      - CONFIG_SERVER_URI=${CONFIG_SERVER_URI}
+      - CONFIG_PROFILE=${CONFIG_PROFILE}
+    networks:
+      - app-network
+    depends_on:
+      - config-server
+
+  microservicio-licencia:
+    image: devi96/microservicio_licencia_noreactivo:1.0
+    environment:
+      - CONFIG_SERVER_URI=${CONFIG_SERVER_URI}
+      - CONFIG_PROFILE=${CONFIG_PROFILE}
+    networks:
+      - app-network
+    depends_on:
+      - config-server
+
+  microservicio-vehiculo:
+    image: devi96/microservicio_vehiculo_noreactivo:1.0
+    environment:
+      - CONFIG_SERVER_URI=${CONFIG_SERVER_URI}
+      - CONFIG_PROFILE=${CONFIG_PROFILE}
+    networks:
+      - app-network
+    depends_on:
+      - config-server
+
+  authentication-server:
+    image: devi96/authentication-server-jw:1.0
+    ports:
+      - "8088:8088"
+    environment:
+      - CONFIG_SERVER_URI=${CONFIG_SERVER_URI}
+      - CONFIG_PROFILE=${CONFIG_PROFILE}
+    networks:
+      - app-network
+    depends_on:
+      - config-server
+
+networks:
+  app-network:
+    external: true

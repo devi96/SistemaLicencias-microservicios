@@ -9,7 +9,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/devi96/config-server-licencia.git  # Ejemplo de repo donde se encuentran los archivos de configuración
+          uri: ${GIT_URI}  # Ejemplo de repo donde se encuentran los archivos de configuración
           cloneOnStart: true  # Clona el repo al iniciar el Config Server
           username: ${GIT_USERNAME}  # Nombre de usuario para acceder al repo privado
           password: ${GIT_PASSWORD}  # Contraseña para acceder al repo privado
