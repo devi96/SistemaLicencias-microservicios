@@ -1,5 +1,5 @@
 # Usa una imagen base liviana con JDK 17
-FROM eclipse-temurin:17-jdk-alpine
+FROM eclipse-temurin:17-jdk
 
 # Crea un directorio de trabajo dentro del contenedor
 WORKDIR /app
