@@ -45,10 +45,17 @@ jobs:
             microservicio_usuario_noreactivo
             microservicio_vehiculo_noreactivo
           )
-
+          
+          
           for servicio in "${microservicios[@]}"; do
-            echo "🔧 Construyendo $servicio..."
+            echo "🚀 Empaquetando y construyendo $SERVICE..."
+            
+            cd $servicio || exit
+            mvn clean package -DskipTests
+            cd ..
 
+            echo "🔧 Construyendo $servicio..."
+            
             docker buildx build \
               --platform linux/amd64,linux/arm64 \
               --push \
