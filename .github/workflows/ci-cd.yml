@@ -48,11 +48,18 @@ jobs:
           
           
           for servicio in "${microservicios[@]}"; do
-            echo "🚀 Empaquetando y construyendo $SERVICE..."
-            
+            echo "🚀 Empaquetando y construyendo $servicio..."
+
             cd $servicio || exit
             mvn clean package -DskipTests
             cd ..
+
+            echo "🔎 Ejecutando análisis SonarQube para $servicio..."
+            
+            mvn -f $servicio/pom.xml verify sonar:sonar \
+              -Dsonar.projectKey=devi96_SistemaLicencias-microservicios_AZc-tKFDz0f5lTkTLZAK \
+              -Dsonar.host.url=http://localhost:9000 \
+              -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
             echo "🔧 Construyendo $servicio..."
             
