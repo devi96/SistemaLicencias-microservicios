@@ -40,7 +40,7 @@ public class SecurityService {
     private final AuthenticationManager authenticationManager;
     private final KafkaTemplate<String, UserCreateEvent> kafkaTemplate;
     @Value("${topic.usuario-auth-creacion}")
-    private String usuarioAuthTopic;
+    private final String usuarioAuthTopic;
 
     @Transactional
     public String register(UserRegister userRegister){
