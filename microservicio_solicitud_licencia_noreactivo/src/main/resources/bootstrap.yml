@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: service-solicitud-licencia
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URI:http://localhost:8888}
+      profile: ${CONFIG_PROFILE:dev}
+      enabled: true
